@@ -1,27 +1,44 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { Autor, Container, DataPost } from './styles';
 
-export function CardPost() {
+interface PostProps {
+  slug: string;
+  title: string;
+  excerpt: string;
+  updateAt: string;
+  author: string;
+}
+
+export function CardPost({
+  slug,
+  title,
+  excerpt,
+  updateAt,
+  author,
+}: PostProps) {
   return (
-    <Container>
-      <h2>Como utilizar hooks</h2>
-      <p>Pensando em sicronização, invés de ciclos de vida</p>
-      <div>
-        <DataPost>
-          <Image
-            src="/images/calendar.svg"
-            alt="Calendário"
-            width={14}
-            height={14}
-          />
-          15 Mar 2021
-        </DataPost>
-        <Autor>
-          <Image src="/images/user.svg" alt="Autor" width={14} height={14} />
-          Joseph Oliveira
-        </Autor>
-      </div>
-    </Container>
+    <Link href={`/posts/${slug}`} passHref>
+      <Container>
+        <h2>{title}</h2>
+        <p>{excerpt}</p>
+        <div>
+          <DataPost>
+            <Image
+              src="/images/calendar.svg"
+              alt="Calendário"
+              width={14}
+              height={14}
+            />
+            {updateAt}
+          </DataPost>
+          <Autor>
+            <Image src="/images/user.svg" alt="Autor" width={14} height={14} />
+            {author}
+          </Autor>
+        </div>
+      </Container>
+    </Link>
   );
 }

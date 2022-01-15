@@ -4,6 +4,7 @@ export const Container = styled.div`
   color: #fff;
   margin-top: 1rem;
   margin-bottom: 5rem;
+  cursor: pointer;
 
   h2 {
     font-size: 2.8rem;

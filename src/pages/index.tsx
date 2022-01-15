@@ -4,8 +4,23 @@ import { CardPost } from '../components/CardPost';
 import { ContainerHome, ContainerPosts } from '../styles/home';
 import { getPrismicClient } from './api/services/prismic';
 import Prismic from '@prismicio/client';
+import { RichText } from 'prismic-dom';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
-export default function Home() {
+interface Post {
+  slug: string;
+  title: string;
+  excerpt: string;
+  updateAt: string;
+  author: string;
+}
+
+interface PostsProps {
+  posts: Post[];
+}
+
+export default function Home({ posts }: PostsProps) {
   return (
     <ContainerHome>
       <Head>
@@ -15,8 +30,9 @@ export default function Home() {
       </Head>
 
       <ContainerPosts>
-        <CardPost />
-        <CardPost />
+        {posts.map((post) => (
+          <CardPost key={post.slug} {...post} />
+        ))}
       </ContainerPosts>
     </ContainerHome>
   );
@@ -28,13 +44,26 @@ export const getStaticProps: GetStaticProps = async () => {
   const response = await prismic.query(
     [Prismic.predicates.at('document.type', 'post')],
     {
-      fetch: ['post.title', 'post.content'],
+      fetch: ['post.title', 'post.content', 'post.author'],
       pageSize: 100,
     },
   );
 
   console.log(JSON.stringify(response, null, 2));
+  const posts = response.results.map((post) => ({
+    slug: post.uid,
+    title: RichText.asText(post.data.title),
+    excerpt:
+      post.data.content.find((content) => content.type === 'paragraph')?.text ??
+      '',
+    updateAt: format(new Date(post.last_publication_date), 'dd MMM yyyy', {
+      locale: ptBR,
+    }),
+    author: post.data.author,
+  }));
   return {
-    props: {},
+    props: {
+      posts,
+    },
   };
 };
