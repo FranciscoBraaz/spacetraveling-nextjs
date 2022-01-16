@@ -5,10 +5,11 @@ import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Container, Content } from './styles';
+import { Container, Content } from '../../styles/post';
 import Image from 'next/image';
 import { Autor, DataPost } from '../../components/CardPost/styles';
 import Head from 'next/head';
+import { Comments } from '../../components/Comments/';
 
 interface Banner {
   dimensions: {
@@ -68,6 +69,7 @@ export default function Post({ post }: PostProps) {
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
           </Content>
         </article>
+        <Comments />
       </Container>
     </>
   );
