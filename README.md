@@ -40,3 +40,7 @@ https://user-images.githubusercontent.com/50181942/149678463-ccad4af1-8089-42a7-
    NEXT_PUBLIC_PRISMIC_API_ENDPOINT = Seu endpoint
    NEXT_PUBLIC_PRISMIC_ACCESS_TOKEN = Seu token
   ```
+
+<br/><br/> 
+##
+👨‍💻 Desenvolvido por [Francisco Braz](https://github.com/FranciscoBraaz)
