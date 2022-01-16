@@ -39,3 +39,5 @@ export const DataPost = styled.span`
   }
 `;
 export const Autor = styled(DataPost)``;
+
+export const ReadingTime = styled(DataPost)``;

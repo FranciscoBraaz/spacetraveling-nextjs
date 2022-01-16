@@ -8,7 +8,8 @@ export const Container = styled.div`
   }
 
   & > article {
-    width: 112rem;
+    width: 100%;
+    max-width: 112rem;
     margin: 0 auto;
     margin-top: 4rem;
   }

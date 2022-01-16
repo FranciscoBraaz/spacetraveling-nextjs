@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Container, Content } from '../../styles/post';
 import Image from 'next/image';
-import { Autor, DataPost } from '../../components/CardPost/styles';
+import { Autor, DataPost, ReadingTime } from '../../components/CardPost/styles';
 import Head from 'next/head';
 import { Comments } from '../../components/Comments/';
 import { PostButtons } from '../../components/PostButtons';
@@ -35,6 +35,7 @@ interface PostProps {
     content: string;
     updateAt: string;
     author: string;
+    readingTime: number;
   };
   nextPost: NeighborhoodPost;
   previousPost: NeighborhoodPost;
@@ -42,7 +43,7 @@ interface PostProps {
 
 export default function Post({ post, nextPost, previousPost }: PostProps) {
   const router = useRouter();
-
+  console.log(post.readingTime);
   if (router.isFallback) {
     return <Loader />;
   }
@@ -80,6 +81,15 @@ export default function Post({ post, nextPost, previousPost }: PostProps) {
               />
               {post.author}
             </Autor>
+            <ReadingTime>
+              <Image
+                src="/images/clock.svg"
+                alt="Autor"
+                width={14}
+                height={14}
+              />
+              {post.readingTime} min
+            </ReadingTime>
           </div>
           <Content>
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
@@ -147,6 +157,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   );
 
+  // @ts-ignore
+  const texts = response.data.content.map((content) => content.text);
+
+  const amountWords = texts.reduce((prevValue, text) => {
+    const words = text.split(' ').length;
+    return words + prevValue;
+  }, 0);
+
+  const readingTime = Math.ceil(amountWords / 200);
+
   const post = {
     slug,
     // @ts-ignore
@@ -160,7 +180,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }),
     // @ts-ignore
     author: response.data.author,
+    readingTime,
   };
+
   return {
     props: {
       post,
