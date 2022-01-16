@@ -12,7 +12,7 @@
  - NextJS
  - [Utterances](https://utteranc.es/)
 
-### 💻 Preview:
+## 💻 Preview:
 
 https://user-images.githubusercontent.com/50181942/149678463-ccad4af1-8089-42a7-a118-f92cf15b1a71.mp4
 
