@@ -10,10 +10,19 @@ import Image from 'next/image';
 import { Autor, DataPost } from '../../components/CardPost/styles';
 import Head from 'next/head';
 
+interface Banner {
+  dimensions: {
+    width: number;
+    height: number;
+  };
+  url: string;
+}
+
 interface PostProps {
   post: {
     slug: string;
     title: string;
+    banner: Banner;
     content: string;
     updateAt: string;
     author: string;
@@ -27,6 +36,12 @@ export default function Post({ post }: PostProps) {
         <title>{post.title} | Spacetraveling</title>
       </Head>
       <Container>
+        <Image
+          src={post.banner.url}
+          width={post.banner.dimensions.width}
+          height={500}
+          alt={post.title}
+        />
         <article>
           <h1>{post.title}</h1>
           <div>
@@ -85,10 +100,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const prismic = getPrismicClient();
   const response = await prismic.getByUID('post', String(slug), {});
+  console.log(JSON.stringify(response, null, 2));
   const post = {
     slug,
     // @ts-ignore
     title: RichText.asText(response.data.title),
+    // @ts-ignore
+    banner: response.data.banner,
     // @ts-ignore
     content: RichText.asHtml(response.data.content),
     updateAt: format(new Date(response.last_publication_date), 'dd MMM yyyy', {

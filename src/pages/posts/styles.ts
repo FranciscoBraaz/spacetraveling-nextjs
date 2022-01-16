@@ -1,9 +1,17 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 112rem;
-  margin: 0 auto;
   color: #fff;
+
+  & > span {
+    width: 100% !important;
+  }
+
+  & > article {
+    width: 112rem;
+    margin: 0 auto;
+    margin-top: 4rem;
+  }
 
   & > article > div {
     display: flex;
