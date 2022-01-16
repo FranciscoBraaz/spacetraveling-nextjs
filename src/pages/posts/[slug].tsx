@@ -43,7 +43,7 @@ interface PostProps {
 
 export default function Post({ post, nextPost, previousPost }: PostProps) {
   const router = useRouter();
-  console.log(post.readingTime);
+
   if (router.isFallback) {
     return <Loader />;
   }

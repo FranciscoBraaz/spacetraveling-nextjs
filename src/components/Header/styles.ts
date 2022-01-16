@@ -16,5 +16,6 @@ export const Container = styled.div`
 
   & img {
     margin-left: -1.5rem !important;
+    cursor: pointer !important;
   }
 `;
