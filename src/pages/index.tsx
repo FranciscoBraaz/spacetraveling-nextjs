@@ -45,20 +45,22 @@ export const getStaticProps: GetStaticProps = async () => {
     [Prismic.predicates.at('document.type', 'post')],
     {
       fetch: ['post.title', 'post.content', 'post.author'],
-      pageSize: 100,
+      pageSize: 20,
     },
   );
 
-  console.log(JSON.stringify(response, null, 2));
   const posts = response.results.map((post) => ({
     slug: post.uid,
+    // @ts-ignore
     title: RichText.asText(post.data.title),
     excerpt:
+      // @ts-ignore
       post.data.content.find((content) => content.type === 'paragraph')?.text ??
       '',
     updateAt: format(new Date(post.last_publication_date), 'dd MMM yyyy', {
       locale: ptBR,
     }),
+    // @ts-ignore
     author: post.data.author,
   }));
   return {
