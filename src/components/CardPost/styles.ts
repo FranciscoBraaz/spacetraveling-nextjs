@@ -6,6 +6,10 @@ export const Container = styled.div`
   margin-bottom: 5rem;
   cursor: pointer;
 
+  &:last-child {
+    margin-bottom: 3rem;
+  }
+
   h2 {
     font-size: 2.8rem;
     font-weight: bold;

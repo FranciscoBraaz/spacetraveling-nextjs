@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import next, { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { CardPost } from '../components/CardPost';
 import { ContainerHome, ContainerPosts } from '../styles/home';
@@ -7,6 +7,7 @@ import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useEffect, useState } from 'react';
 
 interface Post {
   slug: string;
@@ -18,9 +19,53 @@ interface Post {
 
 interface PostsProps {
   posts: Post[];
+  nextPage: string;
 }
 
-export default function Home({ posts }: PostsProps) {
+export default function Home({ posts, nextPage }: PostsProps) {
+  const [postsState, setPostsState] = useState<Post[]>(posts);
+  const [page, setPage] = useState(1);
+  const [nextPageState, setNextPageState] = useState(nextPage);
+
+  useEffect(() => {
+    const prismic = getPrismicClient();
+
+    async function loadMorePosts() {
+      const response = await prismic.query(
+        [Prismic.predicates.at('document.type', 'post')],
+        {
+          fetch: ['post.title', 'post.content', 'post.author'],
+          pageSize: 2,
+          page,
+        },
+      );
+
+      const posts = response.results.map((post) => ({
+        slug: post.uid,
+        // @ts-ignore
+        title: RichText.asText(post.data.title),
+        excerpt:
+          // @ts-ignore
+          post.data.content.find(
+            (content) =>
+              content.type === 'paragraph' || content.type.includes('heading'),
+          )?.text ?? '',
+        updateAt: format(new Date(post.last_publication_date), 'dd MMM yyyy', {
+          locale: ptBR,
+        }),
+        // @ts-ignore
+        author: post.data.author,
+      }));
+      console.log(response.next_page);
+      setNextPageState(response.next_page);
+      setPostsState((prevState) => [...prevState, ...posts]);
+    }
+
+    if (page !== 1) {
+      loadMorePosts();
+    }
+  }, [page]);
+
   return (
     <ContainerHome>
       <Head>
@@ -30,10 +75,15 @@ export default function Home({ posts }: PostsProps) {
       </Head>
 
       <ContainerPosts>
-        {posts.map((post) => (
+        {postsState.map((post) => (
           <CardPost key={post.slug} {...post} />
         ))}
       </ContainerPosts>
+      {nextPageState !== null && (
+        <button onClick={() => setPage((prevState) => prevState + 1)}>
+          Carregar mais
+        </button>
+      )}
     </ContainerHome>
   );
 }
@@ -45,7 +95,7 @@ export const getStaticProps: GetStaticProps = async () => {
     [Prismic.predicates.at('document.type', 'post')],
     {
       fetch: ['post.title', 'post.content', 'post.author'],
-      pageSize: 20,
+      pageSize: 2,
     },
   );
 
@@ -55,8 +105,10 @@ export const getStaticProps: GetStaticProps = async () => {
     title: RichText.asText(post.data.title),
     excerpt:
       // @ts-ignore
-      post.data.content.find((content) => content.type === 'paragraph')?.text ??
-      '',
+      post.data.content.find(
+        (content) =>
+          content.type === 'paragraph' || content.type.includes('heading'),
+      )?.text ?? '',
     updateAt: format(new Date(post.last_publication_date), 'dd MMM yyyy', {
       locale: ptBR,
     }),
@@ -66,6 +118,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       posts,
+      nextPage: response.next_page,
     },
   };
 };

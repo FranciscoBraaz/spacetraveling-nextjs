@@ -79,7 +79,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const response = await prismic.query(
     [Prismic.predicates.at('document.type', 'post')],
     {
-      pageSize: 10,
+      pageSize: 2,
     },
   );
 
@@ -100,7 +100,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const prismic = getPrismicClient();
   const response = await prismic.getByUID('post', String(slug), {});
-  console.log(JSON.stringify(response, null, 2));
+
   const post = {
     slug,
     // @ts-ignore
