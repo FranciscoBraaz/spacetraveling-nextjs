@@ -56,7 +56,7 @@ export default function Home({ posts, nextPage }: PostsProps) {
         // @ts-ignore
         author: post.data.author,
       }));
-      console.log(response.next_page);
+
       setNextPageState(response.next_page);
       setPostsState((prevState) => [...prevState, ...posts]);
     }
