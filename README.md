@@ -14,7 +14,7 @@
 
 ## 💻 Preview:
 
-https://user-images.githubusercontent.com/50181942/149678463-ccad4af1-8089-42a7-a118-f92cf15b1a71.mp4
+https://user-images.githubusercontent.com/50181942/149679426-c209faac-ba7c-4e2c-9e4b-667389234cb2.mp4
 
 ## 👷  Executando o projeto
 
