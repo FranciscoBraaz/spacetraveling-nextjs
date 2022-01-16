@@ -10,6 +10,9 @@ import Image from 'next/image';
 import { Autor, DataPost } from '../../components/CardPost/styles';
 import Head from 'next/head';
 import { Comments } from '../../components/Comments/';
+import { PostButtons } from '../../components/PostButtons';
+import { useRouter } from 'next/router';
+import { Loader } from '../../components/Loader';
 
 interface Banner {
   dimensions: {
@@ -17,6 +20,11 @@ interface Banner {
     height: number;
   };
   url: string;
+}
+
+interface NeighborhoodPost {
+  title: string;
+  uid: string;
 }
 
 interface PostProps {
@@ -28,9 +36,17 @@ interface PostProps {
     updateAt: string;
     author: string;
   };
+  nextPost: NeighborhoodPost;
+  previousPost: NeighborhoodPost;
 }
 
-export default function Post({ post }: PostProps) {
+export default function Post({ post, nextPost, previousPost }: PostProps) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Head>
@@ -69,6 +85,7 @@ export default function Post({ post }: PostProps) {
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
           </Content>
         </article>
+        <PostButtons previousPost={previousPost} nextPost={nextPost} />
         <Comments />
       </Container>
     </>
@@ -92,7 +109,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
 
   return {
-    fallback: 'blocking',
+    fallback: true,
     paths,
   };
 };
@@ -102,6 +119,33 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const prismic = getPrismicClient();
   const response = await prismic.getByUID('post', String(slug), {});
+
+  function checkNeighborhoodPost(post: any, slug: string) {
+    return slug === post.results[0].uid
+      ? null
+      : {
+          title: RichText.asText(post.results[0].data.title),
+          uid: post.results[0]?.uid,
+        };
+  }
+
+  const previousPost = await prismic.query(
+    Prismic.Predicates.at('document.type', 'post'),
+    {
+      pageSize: 1,
+      after: slug,
+      orderings: '[document.first_publication_date desc]',
+    },
+  );
+
+  const nextPost = await prismic.query(
+    Prismic.Predicates.at('document.type', 'post'),
+    {
+      pageSize: 1,
+      after: slug,
+      orderings: '[document.first_publication_date]',
+    },
+  );
 
   const post = {
     slug,
@@ -120,6 +164,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       post,
+      nextPost: checkNeighborhoodPost(nextPost, String(slug)),
+      previousPost: checkNeighborhoodPost(previousPost, String(slug)),
     },
   };
 };
