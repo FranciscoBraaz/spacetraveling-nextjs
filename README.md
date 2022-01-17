@@ -20,10 +20,10 @@ https://user-images.githubusercontent.com/50181942/149679426-c209faac-ba7c-4e2c-
 
  ### Baixando repositório para sua máquina
     # Clone o repositório com:
-    git clone https://github.com/FranciscoBraaz/ig-news
+    git clone https://github.com/FranciscoBraaz/spacetraveling-nextjs.git
     
     # Navegue para a pasta raíz com:
-    cd ignews
+    cd spacetraveling-nextjs
 
     
    ### Instalando dependências
@@ -33,9 +33,9 @@ https://user-images.githubusercontent.com/50181942/149679426-c209faac-ba7c-4e2c-
     yarn install
 
 ### Configurando aplicações de terceiros
-  #### PrismicCMS
+  #### Prismic CMS
  
- - É necessário possuir uma conta no Prismic CMS e criar alguns artigos para popular a aplicação. Após a criação da conta e dos artigos, copie suas credencias e coloque-as no arquivo 'env.local'. 
+ - É necessário possuir uma conta no Prismic CMS e criar alguns artigos para popular a aplicação. Após a criação da conta e dos artigos, copie suas credencias e coloque-as num arquivo '.env.local'. 
   ```
    NEXT_PUBLIC_PRISMIC_API_ENDPOINT = Seu endpoint
    NEXT_PUBLIC_PRISMIC_ACCESS_TOKEN = Seu token
