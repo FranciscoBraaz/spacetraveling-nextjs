@@ -22,4 +22,10 @@ export const Container = styled.div`
   @media screen and (max-width: 1180px) {
     margin: 0 2rem;
   }
+
+  @media screen and (max-width: 320px) {
+    & img {
+      margin-left: -1.2rem !important;
+    }
+  }
 `;

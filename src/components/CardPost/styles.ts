@@ -28,6 +28,10 @@ export const Container = styled.div`
   }
 
   @media screen and (max-width: 680px) {
+    & {
+      margin-bottom: 4rem;
+    }
+
     h2 {
       font-size: 2rem;
     }

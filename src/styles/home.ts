@@ -11,6 +11,7 @@ export const ContainerHome = styled.div`
     border: none;
     cursor: pointer;
     margin-bottom: 3rem;
+    padding: 0;
     font-weight: 600;
 
     &:hover {
@@ -20,6 +21,12 @@ export const ContainerHome = styled.div`
 
   @media screen and (max-width: 1180px) {
     margin: 0 2rem;
+  }
+
+  @media screen and (max-width: 680px) {
+    button {
+      font-size: 1.4rem;
+    }
   }
 `;
 
