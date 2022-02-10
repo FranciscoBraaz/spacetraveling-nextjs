@@ -26,6 +26,16 @@ export const Container = styled.div`
   & > div {
     display: flex;
   }
+
+  @media screen and (max-width: 680px) {
+    h2 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.3rem;
+    }
+  }
 `;
 export const DataPost = styled.span`
   font-size: 1.4rem;
@@ -36,6 +46,12 @@ export const DataPost = styled.span`
 
   span {
     margin-right: 0.5rem !important;
+  }
+
+  @media screen and (max-width: 680px) {
+    & {
+      font-size: 1rem;
+    }
   }
 `;
 export const Autor = styled(DataPost)``;

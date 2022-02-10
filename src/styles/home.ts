@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ContainerHome = styled.div`
   margin: 0 auto;
-  width: 112rem;
+  max-width: 112rem;
 
   button {
     font-size: 1.6rem;
@@ -16,6 +16,10 @@ export const ContainerHome = styled.div`
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  @media screen and (max-width: 1180px) {
+    margin: 0 2rem;
   }
 `;
 

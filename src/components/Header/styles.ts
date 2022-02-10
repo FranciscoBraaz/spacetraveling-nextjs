@@ -7,7 +7,7 @@ export const HeaderStyle = styled.header`
 `;
 
 export const Container = styled.div`
-  width: 112rem;
+  max-width: 112rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -17,5 +17,9 @@ export const Container = styled.div`
   & img {
     margin-left: -1.5rem !important;
     cursor: pointer !important;
+  }
+
+  @media screen and (max-width: 1180px) {
+    margin: 0 2rem;
   }
 `;

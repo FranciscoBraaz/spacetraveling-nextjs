@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 112rem;
+  max-width: 112rem;
   margin: 3rem auto;
   display: flex;
   justify-content: space-between;
@@ -10,13 +10,11 @@ export const Container = styled.div`
   position: relative;
 
   .previousbutton {
-    position: absolute;
-    left: 0;
+    margin-right: auto;
   }
 
   .nextButton {
-    position: absolute;
-    right: 0;
+    margin-left: auto;
   }
 
   button {
@@ -43,6 +41,38 @@ export const Container = styled.div`
 
     &:hover {
       border: 1px solid var(--highlight);
+    }
+  }
+
+  @media screen and (max-width: 1180px) {
+    & {
+      margin: 3rem 2rem;
+    }
+  }
+
+  @media screen and (max-width: 780px) {
+    & {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        span:first-child {
+          text-align: start;
+        }
+      }
+
+      .previousbutton {
+        width: 100%;
+        max-width: 345px;
+        margin-right: unset;
+      }
+
+      .nextButton {
+        width: 100%;
+        max-width: 345px;
+        margin-left: unset;
+      }
     }
   }
 `;
