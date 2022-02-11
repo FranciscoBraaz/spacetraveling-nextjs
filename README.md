@@ -1,8 +1,16 @@
-## Spacetraveling - Um blog com NextJS e Prismic CMS
 
-###  🔽 Veja funcionando:
-[Deploy](https://spacetraveling-nextjs.vercel.app/)
-#### Aplicação desenvolvida com o objetivo de praticar conceitos dentro do ecossistema do nextJS. Consiste num blog, que utiliza a API do Prismic CMS, para consumir os conteúdos criados (neste caso, posts). A aplicação conta com um sessão de comentários desenvolvida com o serviço disponibilizado pelo [Utteranc](https://utteranc.es/) e utiliza Static Site Generation (SSG) para renderizar as páginas do site.
+<h1 align="center">
+   <img src=https://i.imgur.com/kZs0Otz.png" alt="Logo" width="238.62px" height="25.63px"/>
+</h1>
+                                                                                         
+<h2 align="center">
+    Um blog com NextJS e Prismic CMS           
+</h2>
+
+##  🔽 Veja funcionando: [Spacetraveling](https://spacetraveling-nextjs.vercel.app/)
+
+## 📖 Sobre o projeto 
+Aplicação desenvolvida com o objetivo de praticar conceitos dentro do ecossistema do nextJS. Consiste num blog, que utiliza a API do Prismic CMS, para consumir os conteúdos criados (neste caso, posts). A aplicação conta com um sessão de comentários desenvolvida com o serviço disponibilizado pelo [Utteranc](https://utteranc.es/) e utiliza Static Site Generation (SSG) para renderizar as páginas do site.
 
 <img src="https://i.imgur.com/lM6jeaZ.png" alt="Home do site, com feed de fotos" width="90%"/>
 
@@ -41,6 +49,5 @@ https://user-images.githubusercontent.com/50181942/149679426-c209faac-ba7c-4e2c-
    NEXT_PUBLIC_PRISMIC_ACCESS_TOKEN = Seu token
   ```
 
-<br/><br/> 
 ##
 👨‍💻 Desenvolvido por [Francisco Braz](https://github.com/FranciscoBraaz)
